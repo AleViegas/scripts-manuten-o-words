@@ -2,22 +2,29 @@ import os
 import time
 from colorama import init, Fore
 from docx import Document
+from docx.shared import Pt
 
-#Função que substitui a ART do memorial
+#Função que troca a data do memorial
 def replaceDateOnMemorial(path, dia, mes):
     doc = Document(fr"{path}")
     #abrindo o documento
     
-    print(doc.paragraphs[0].text)
-    texto = f"                                                                                                                 São Paulo, {dia} de {mes} de 2021"
+    #print(doc.paragraphs[0].text)
+    texto = f"                                                                                                São Paulo, {dia} de {mes} de 2021"
     
-    doc.paragraphs[0].text = texto
+
+    doc.paragraphs[0].text = []
+    run = doc.paragraphs[0].add_run(texto)
+    font = run.font
+    font.name = 'Times New Roman'
+    font.size = Pt( 11 )
+    font.bold = True
 
     doc.save(fr"{path}")
     #Salvando o documento no mesmo caminho
     
     
-#Função que substitui a ART da carta
+#Função que troca a data da carta
 def replaceDateOnLetter(path, dia, mes):
     doc = Document(fr"{path}")
     #abrindo o documento
@@ -25,9 +32,12 @@ def replaceDateOnLetter(path, dia, mes):
     texto = f"São Jose dos Campos, {dia} de {mes} de 2021"
     #print(doc.paragraphs[3].text)
 
-    doc.paragraphs[3].text = texto
 
-    #print(doc.paragraphs[3].style)
+    doc.paragraphs[3].text = []
+    run = doc.paragraphs[3].add_run(texto)
+    font = run.font
+    font.name = 'Calibri (Body)'
+    font.size = Pt( 9 )
 
     doc.save(fr"{path}")
     #Salvando o documento no mesmo caminho
@@ -75,7 +85,7 @@ for subfolder in subfolders:
             replaceDateOnLetter(docx, dia, mes)
             #Chamada da função
             
-            #print(docxName)
+            print(docxName)
             
         if docxName.startswith("Memorial"):
             #Separação dos memoriais
@@ -83,10 +93,10 @@ for subfolder in subfolders:
             replaceDateOnMemorial(docx, dia, mes)
             #Chamada da função
             
-            #print(docxName)
+            print(docxName)
             
         
-print("\nA ART foi adicionada em todos os documentos")
+print("\nAAAAAH DATADOOOOO")
 time.sleep(1)
 print("Bora pra cima!")
 time.sleep(5)
